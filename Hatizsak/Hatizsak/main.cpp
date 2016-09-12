@@ -11,13 +11,17 @@
 
 int main(int argc, const char * argv[]) {
     
-    Thing t1(4, 6);
-    Thing t2(3, 5);
-    Thing t3(2, 3);
-    Thing t4(2, 3);
+    Thing t1(6, 4);
+    Thing t2(5, 3);
+    Thing t3(3, 2);
+    Thing t4(3, 2);
     
-    BackPack(<#std::vector<Thing>#>, <#int capacity#>)
+    BackPack bp { std::vector<Thing> {t1, t2, t3, t4}, 8};
     
+    bp.Calculate();
+    bp.PrintResult();
+    
+    getchar();
     
     return 0;
 }

@@ -37,7 +37,7 @@ int BackPack::Calculate(){
         
     }
     
-    for (int j = 0; j < capacity; j++)
+    for (int j = 0; j <= capacity; j++)
     {
         if (things[0].weight <= j){
             matrix[0][j] = things[0].value;
@@ -47,7 +47,7 @@ int BackPack::Calculate(){
     
     for (int i = 1; i < size; i++)
     {
-        for (int j = 1; j < capacity; j++)
+        for (int j = 1; j <= capacity; j++)
         {
             if (things[i].weight <= j)
                 matrix[i][j] = std::max(matrix[i-1][j], things[i].value + matrix[i-1][j - things[i].weight]);
@@ -56,17 +56,27 @@ int BackPack::Calculate(){
         }
     }
     
-    return matrix[things.size()][capacity];
+    return matrix[things.size()-1][capacity];
 }
 
 void BackPack::PrintResult(){
     
-    int i = size;
+    // matrix
+    for(int i2 = 0; i2 < size; i2++)
+    {
+        for (int j2 = 0; j2 <= capacity; j2++)
+        {
+            std::cout << matrix[i2][j2] << " ";
+        }
+        std::cout << std::endl;
+    }
+    
+    int i = size - 1;
     int j = capacity;
     
-    while(matrix[i][j] > 0){
-        while (i >= 1 and matrix[i][j] == matrix[i-1][j]){
-            i -= 1;
+    while(i >= 0 && j >= 0 && matrix[i][j] > 0){
+        while (i >= 1 && matrix[i][j] == matrix[i-1][j]){
+                i -= 1;
         }
         
         std::cout << i << std::endl;
