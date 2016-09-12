@@ -9,6 +9,11 @@
 #include "backpack.hpp"
 #include <iostream>
 
+Thing::Thing(int val, int w){
+    value = val;
+    weight = w;
+}
+
 
 BackPack::BackPack(std::vector<Thing> params, int capacity){
     this->things = params;

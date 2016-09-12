@@ -16,6 +16,7 @@ class Thing{
 public:
     int value;
     int weight;
+    Thing(int, int);
 };
 
 class BackPack{
@@ -25,13 +26,9 @@ class BackPack{
     int** matrix;
     
 public:
-    
     BackPack(std::vector<Thing>, int capacity);
-    
     int Calculate();
-    
     void PrintResult();
-    
 };
 
 

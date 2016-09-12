@@ -10,7 +10,14 @@
 #include "backpack.hpp"
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
+    
+    Thing t1(4, 6);
+    Thing t2(3, 5);
+    Thing t3(2, 3);
+    Thing t4(2, 3);
+    
+    BackPack(<#std::vector<Thing>#>, <#int capacity#>)
+    
+    
     return 0;
 }
