@@ -22,7 +22,6 @@ class BackPack{
     std::vector<Thing> things;
     int size;
     int capacity;
-    int doStep(int, int);
     int** matrix;
     
 public:

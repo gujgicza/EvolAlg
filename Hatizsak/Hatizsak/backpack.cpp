@@ -10,26 +10,6 @@
 #include <iostream>
 
 
-int BackPack::doStep(int number, int sumWeight){
-    int result;
-    if (sumWeight == 0){
-        result = 0;
-    }
-    else if (number == 0){
-        if (things[number].weight <= sumWeight){
-            result = things[number].value;
-        }
-        else result = 0;
-    }
-    else{
-        result = std::max(matrix[number - 1][sumWeight], things[number].value +  matrix[number - 1] [sumWeight- things[number].weight]);
-    }
-    
-    matrix[number][sumWeight] = result;
-    return result;
-    
-}
-
 BackPack::BackPack(std::vector<Thing> params, int capacity){
     this->things = params;
     this->capacity = capacity;
