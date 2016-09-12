@@ -1,10 +1,3 @@
-//
-//  backpack.cpp
-//  Hatizsak
-//
-//  Created by Anna Gujgiczer on 9/12/16.
-//  Copyright © 2016 Anna Gujgiczer. All rights reserved.
-//
 
 #include "backpack.hpp"
 #include <iostream>
@@ -31,12 +24,14 @@ BackPack::BackPack(std::vector<Thing> params, int capacity){
 
 int BackPack::Calculate(){
     
+    // initialise the first column with 0s
     for (int i = 0; i < size; i++)
     {
         matrix[i][0] = 0;
         
     }
     
+    // initialise the first row: 0 if the first item does not fit, the value of the first item if it fits
     for (int j = 0; j <= capacity; j++)
     {
         if (things[0].weight <= j){
@@ -45,23 +40,28 @@ int BackPack::Calculate(){
         else matrix[0][j] = 0;
     }
     
+    // dynamic programming: get matrix[i][j] given the previous calculated cells
     for (int i = 1; i < size; i++)
     {
         for (int j = 1; j <= capacity; j++)
         {
             if (things[i].weight <= j)
-                matrix[i][j] = std::max(matrix[i-1][j], things[i].value + matrix[i-1][j - things[i].weight]);
+                                        /* if we don't include the item: same as the previous row */
+                matrix[i][j] = std::max(matrix[i-1][j],
+                                        /* if we include the item: previous row with less capacity plus this item */
+                                        things[i].value + matrix[i-1][j - things[i].weight]);
             else
                 matrix[i][j] = matrix[i-1][j];
         }
     }
     
+    // returns the best option with all the items
     return matrix[things.size()-1][capacity];
 }
 
 void BackPack::PrintResult(){
     
-    // matrix
+    // print the matrix
     for(int i2 = 0; i2 < size; i2++)
     {
         for (int j2 = 0; j2 <= capacity; j2++)
@@ -71,6 +71,8 @@ void BackPack::PrintResult(){
         std::cout << std::endl;
     }
     
+    
+    // print the selected items
     int i = size - 1;
     int j = capacity;
     

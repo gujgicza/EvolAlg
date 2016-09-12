@@ -1,10 +1,3 @@
-//
-//  backpack.hpp
-//  Hatizsak
-//
-//  Created by Anna Gujgiczer on 9/12/16.
-//  Copyright © 2016 Anna Gujgiczer. All rights reserved.
-//
 
 #ifndef backpack_hpp
 #define backpack_hpp
@@ -12,6 +5,7 @@
 #include <stdio.h>
 #include <vector>
 
+/* class for things you can pack in the backpack. */
 class Thing{
 public:
     int value;
@@ -19,6 +13,10 @@ public:
     Thing(int, int);
 };
 
+/* class for algorithm
+ * stores list and number of things, bag size
+ * and a matrix for the algorithm
+ */
 class BackPack{
     std::vector<Thing> things;
     int size;
@@ -26,9 +24,15 @@ class BackPack{
     int** matrix;
     
 public:
+    
     BackPack(std::vector<Thing>, int capacity);
+    
+    /// calculates the matrix values
     int Calculate();
+    
+    /// print the selected items' number
     void PrintResult();
+    
 };
 
 
