@@ -2,8 +2,9 @@
 #include "genetic.h"
 #include <ctime>
 #include <cstdlib>
+#include <algorithm>
 
-Entity::Entity(std::vector<std::pair<int, int>> objects){
+Entity::Entity(std::vector<std::pair<int, int>> objects, int cap){
 	fenotype = objects;
 	for (auto a : fenotype){
 		if ((rand() % 2) == 0)
@@ -11,11 +12,13 @@ Entity::Entity(std::vector<std::pair<int, int>> objects){
 		else
 			genotype.push_back(false);
 	}
+	capacity = cap;
 }
 
-Entity::Entity(std::vector<bool> geno, std::vector<std::pair<int, int>> feno){
+Entity::Entity(std::vector<bool> geno, std::vector<std::pair<int, int>> feno, int cap){
 	fenotype = feno;
 	genotype = geno;
+	capacity = cap;
 }
 
 std::pair<Entity, Entity> Entity::CrossOverUniform(Entity e){
@@ -31,10 +34,10 @@ std::pair<Entity, Entity> Entity::CrossOverUniform(Entity e){
 		}
 	}
 
-	return std::pair < Entity, Entity > {{ childOneGenotype, fenotype },{ childTwoGenotype, fenotype }};
+	return std::pair < Entity, Entity > {{ childOneGenotype, fenotype, capacity },{ childTwoGenotype, fenotype, capacity }};
 }
 
-int Entity::GetValue(int capacity){
+int Entity::GetValue(){
 	int retVal = 0;
 	int weight = 0;
 	for (int i = 0; i < fenotype.size(); ++i)
@@ -58,7 +61,7 @@ void Entity::Mutate(int mutateChance){
 Population::Population(std::vector<std::pair<int, int>> objectValues, int Capacity, int mutate, int maxGen, int popSize){
 	objects = objectValues;
 	for (int i = 0; i < popSize; ++i)
-		population.push_back(objectValues);
+		population.push_back({ objectValues, Capacity });
 	capacity = Capacity;
 	mutateChance = mutate;
 	maxGenerations = maxGen;
@@ -86,7 +89,7 @@ void Population::getPop(){
 }
 
 void Population::popSort(){
-	//todo
+	std::sort(population.begin(), population.end(), [](Entity e1, Entity e2){return e1.GetValue() > e2.GetValue(); });
 }
 
 std::vector<std::pair<Entity, Entity>> Population::chooseParents(){

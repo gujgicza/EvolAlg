@@ -4,14 +4,15 @@ class Entity{
 
 	std::vector<bool> genotype;
 	std::vector<std::pair<int, int>> fenotype; //Weight, Value
+	int capacity;
 
 public:
 
-	Entity(std::vector<std::pair<int, int>>);
-	Entity(std::vector<bool>, std::vector<std::pair<int, int>>);
+	Entity(std::vector<std::pair<int, int>>, int);
+	Entity(std::vector<bool>, std::vector<std::pair<int, int>>, int);
 
 	std::pair<Entity, Entity> CrossOverUniform(Entity);
-	int GetValue(int);
+	int GetValue();
 	void Mutate(int);
 };
 
