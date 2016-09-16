@@ -69,14 +69,11 @@ Population::Population(std::vector<std::pair<int, int>> objectValues, int Capaci
 	currentGeneration = 0;
 	int prob = population.size() * 5 + 1;
 	int probSum = ((1 + prob) * population.size()) / 2;
-	int j = 0;
-	for (int i = probSum; i > 0; i -= 5){
-		probabilities.insert(i, j);
-		probabilities.insert(i-1, j);
-		probabilities.insert(i-2, j);
-		probabilities.insert(i-3, j);
-		probabilities.insert(i-4, j);
-		j++;
+	for (int i = 0; i < population.size(); ++i){
+		for (int j = probSum; j > probSum - prob; --j)
+			probabilities.insert(j, i);
+		probSum -= prob;
+		prob -= 5;
 	}
 }
 
