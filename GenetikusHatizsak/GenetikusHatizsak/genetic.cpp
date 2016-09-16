@@ -67,7 +67,7 @@ Population::Population(std::vector<std::pair<int, int>> objectValues, int Capaci
 	mutateChance = mutate;
 	maxGenerations = maxGen;
 	currentGeneration = 0;
-	int prob = population.size() * 5 + 1;
+	int prob = population.size() * 5 + 1; //First place gets e.g. 101, second gets 86 and so on.
 	int probSum = ((1 + prob) * population.size()) / 2;
 	for (int i = 0; i < population.size(); ++i){
 		for (int j = probSum; j > probSum - prob; --j)
