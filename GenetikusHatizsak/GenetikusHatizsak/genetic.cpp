@@ -71,7 +71,7 @@ Population::Population(std::vector<std::pair<int, int>> objectValues, int Capaci
 	int probSum = ((1 + prob) * population.size()) / 2;
 	for (int i = 0; i < population.size(); ++i){
 		for (int j = probSum; j > probSum - prob; --j)
-			probabilities.insert(j, i);
+			probabilities.insert({ j, i });
 		probSum -= prob;
 		prob -= 5;
 	}
@@ -110,4 +110,5 @@ std::vector<std::pair<Entity, Entity>> Population::chooseParents(){
 	std::vector<std::pair<Entity, Entity>> retVal;
 	for (int i = 0; i < population.size() / 2; ++i)
 		retVal.push_back({ population[probabilities.at(rand() % probSum)], population[probabilities.at(rand() % probSum)] });
+	return retVal;
 }
