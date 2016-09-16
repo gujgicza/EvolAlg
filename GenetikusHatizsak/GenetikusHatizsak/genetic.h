@@ -1,10 +1,12 @@
 #include <vector>
+#include <map>
 
 class Entity{
 
 	std::vector<bool> genotype;
 	std::vector<std::pair<int, int>> fenotype; //Weight, Value
 	int capacity;
+
 
 public:
 
@@ -24,6 +26,7 @@ class Population{
 	int mutateChance;
 	int maxGenerations;
 	int currentGeneration;
+	std::map<int, int> probabilities;
 
 public:
 

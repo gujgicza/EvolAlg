@@ -3,6 +3,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <algorithm>
+#include <map>
 
 Entity::Entity(std::vector<std::pair<int, int>> objects, int cap){
 	fenotype = objects;
@@ -66,6 +67,17 @@ Population::Population(std::vector<std::pair<int, int>> objectValues, int Capaci
 	mutateChance = mutate;
 	maxGenerations = maxGen;
 	currentGeneration = 0;
+	int prob = population.size() * 5 + 1;
+	int probSum = ((1 + prob) * population.size()) / 2;
+	int j = 0;
+	for (int i = probSum; i > 0; i -= 5){
+		probabilities.insert(i, j);
+		probabilities.insert(i-1, j);
+		probabilities.insert(i-2, j);
+		probabilities.insert(i-3, j);
+		probabilities.insert(i-4, j);
+		j++;
+	}
 }
 
 void Population::evolve(){
@@ -85,7 +97,10 @@ void Population::evolve(){
 }
 
 void Population::getPop(){
-	//todo
+	int average = 0;
+	for (auto e : population)
+		average += e.GetValue();
+	std::cout << "Best entity's value is: " << population[0].GetValue() << std::endl << "Average value is: " << average / population.size();
 }
 
 void Population::popSort(){
@@ -93,5 +108,9 @@ void Population::popSort(){
 }
 
 std::vector<std::pair<Entity, Entity>> Population::chooseParents(){
-	//todo
+	int prob = population.size() * 5 + 1;
+	int probSum = ((1 + prob) * population.size()) / 2;
+	std::vector<std::pair<Entity, Entity>> retVal;
+	for (int i = 0; i < population.size() / 2; ++i)
+		retVal.push_back({ population[probabilities.at(rand() % probSum)], population[probabilities.at(rand() % probSum)] });
 }
