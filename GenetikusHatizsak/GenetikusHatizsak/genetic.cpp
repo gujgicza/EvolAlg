@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <map>
 
+///Random ctor
 Entity::Entity(std::vector<std::pair<int, int>> objects, int cap){
 	fenotype = objects;
 	for (auto a : fenotype){
@@ -69,7 +70,7 @@ Population::Population(std::vector<std::pair<int, int>> objectValues, int Capaci
 	currentGeneration = 0;
 	int prob = population.size() * 5 + 1; //First place gets e.g. 101, second gets 86 and so on.
 	int probSum = ((1 + prob) * population.size()) / 2;
-	for (int i = 0; i < population.size(); ++i){
+	for (int i = 0; i < population.size(); ++i){ //Places the probabilities for each ordinal number in the map
 		for (int j = probSum; j > probSum - prob; --j)
 			probabilities.insert({ j, i });
 		probSum -= prob;
@@ -81,7 +82,7 @@ void Population::evolve(){
 	for (; currentGeneration < maxGenerations; ++currentGeneration){
 		popSort();
 		auto parents = chooseParents();
-		population.clear(); //????
+		population.clear();
 		for (auto& parent : parents){
 			auto children = parent.first.CrossOverUniform(parent.second);
 			population.push_back(children.first);
@@ -91,6 +92,7 @@ void Population::evolve(){
 			entity.Mutate(mutateChance);
 
 	}
+	popSort();
 }
 
 void Population::getPop(){
@@ -109,6 +111,6 @@ std::vector<std::pair<Entity, Entity>> Population::chooseParents(){
 	int probSum = ((1 + prob) * population.size()) / 2;
 	std::vector<std::pair<Entity, Entity>> retVal;
 	for (int i = 0; i < population.size() / 2; ++i)
-		retVal.push_back({ population[probabilities.at(rand() % probSum)], population[probabilities.at(rand() % probSum)] });
+		retVal.push_back({ population[probabilities.at(rand() % probSum)], population[probabilities.at(rand() % probSum)] }); //Relatively even distribution with %
 	return retVal;
 }

@@ -3,9 +3,9 @@
 
 class Entity{
 
-	std::vector<bool> genotype;
+	std::vector<bool> genotype; //Which objects are put in the bag
 	std::vector<std::pair<int, int>> fenotype; //Weight, Value
-	int capacity;
+	int capacity; //The bag's capacity
 
 
 public:
@@ -20,13 +20,13 @@ public:
 
 class Population{
 
-	std::vector<std::pair<int, int>> objects;
-	std::vector<Entity> population;
+	std::vector<std::pair<int, int>> objects; //The objects that we're trying to fit into the bag
+	std::vector<Entity> population; //The entities
 	int capacity;
 	int mutateChance;
 	int maxGenerations;
 	int currentGeneration;
-	std::map<int, int> probabilities;
+	std::map<int, int> probabilities; //Used in selecting the parents, stores the probabilities assigned to each ordinal number based on fitness
 
 public:
 
