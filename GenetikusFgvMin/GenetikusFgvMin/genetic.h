@@ -1,39 +1,33 @@
 #include <vector>
 #include <map>
 
-class Entity{
+using namespace std;
 
-	std::vector<bool> genotype; //Which objects are put in the bag
-	std::vector<std::pair<int, int>> fenotype; //Weight, Value
-	int capacity; //The bag's capacity
-
-
+class Entity {
+    vector<bool> genotype; //x in binary
+    // bool genotype[18];   // -> 10^5<2^17
+    int fenotype;           // value of x
+    
 public:
-
-	Entity(std::vector<std::pair<int, int>>, int);
-	Entity(std::vector<bool>, std::vector<std::pair<int, int>>, int);
-
-	std::pair<Entity, Entity> CrossOverUniform(Entity);
-	int GetValue();
-	void Mutate(int);
+    Entity(int);
+    void convertToGray();
+    int getFitness();
+    void mutate();
+    pair<Entity, Entity> crossOverUniform(Entity);
+    
 };
 
-class Population{
-
-	std::vector<std::pair<int, int>> objects; //The objects that we're trying to fit into the bag
-	std::vector<Entity> population; //The entities
-	int capacity;
-	int mutateChance;
-	int maxGenerations;
-	int currentGeneration;
-	std::map<int, int> probabilities; //Used in selecting the parents, stores the probabilities assigned to each ordinal number based on fitness
-
+class Population {
+    vector<Entity> population; // the entities
+    int mutateChanche;
+    int maxGenerations;
+    int currentGeneration;
+    map<int, int> probabilties;
+    
 public:
-
-	Population(std::vector<std::pair<int, int>> objects, int capacity, int mutate, int maxGen, int popSize);
-
-	void evolve();
-	void getPop();
-	void popSort();
-	std::vector<std::pair<Entity, Entity>> chooseParents();
+    Population(int mutate, int maxGen, int popSize);
+    void evolve();
+    void getPop();
+    void popSort();
+    vector<pair<Entity, Entity>> chooseParents();
 };

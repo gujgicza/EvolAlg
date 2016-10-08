@@ -11,4 +11,22 @@
 
 #include <stdio.h>
 
+// Needed headers:
+// TODO: add boost
+//#include <boost/math/distributions/students_t.hpp>
+#include <iostream>
+#include <iomanip>
+// Simplify usage:
+// using namespace boost::math;
+using namespace std;
+
+void two_samples_t_test_equal_sd(
+                                 double Sm1,       // Sm1 = Sample 1 Mean.
+                                 double Sd1,       // Sd1 = Sample 1 Standard Deviation.
+                                 unsigned Sn1,     // Sn1 = Sample 1 Size.
+                                 double Sm2,       // Sm2 = Sample 2 Mean.
+                                 double Sd2,       // Sd2 = Sample 2 Standard Deviation.
+                                 unsigned Sn2,     // Sn2 = Sample 2 Size.
+                                 double alpha);     // alpha = Significance Level.
+
 #endif /* t_test_hpp */
