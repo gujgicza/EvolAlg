@@ -7,9 +7,19 @@
 //
 
 #include <iostream>
+#include <vector>
+#include "genetic.h"
+
+using namespace std;
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
-    return 0;
+    
+    int mutateChance, maxGen, popSize;
+    cin >> mutateChance >> maxGen >> popSize;
+
+    Population pop{ mutateChance, maxGen, popSize };
+    pop.evolve(); //All the fun stuff happens here
+    std::cout << std::endl;
+    pop.getPop();
+    
 }
