@@ -14,10 +14,10 @@ using namespace std;
 
 int main(int argc, const char * argv[]) {
     
-    int mutateChance, maxGen, popSize;
-    cin >> mutateChance >> maxGen >> popSize;
+    int mutateChance, maxGen, popSize, gray;
+    cin >> mutateChance >> maxGen >> popSize >> gray;
 
-    Population pop{ mutateChance, maxGen, popSize };
+    Population pop{ mutateChance, maxGen, popSize, static_cast<bool>(gray)};
     pop.evolve(); //All the fun stuff happens here
     std::cout << std::endl;
     pop.getPop();

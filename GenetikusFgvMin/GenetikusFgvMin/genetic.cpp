@@ -3,7 +3,7 @@
 #include <math.h>
 
 
-Entity::Entity(int x){
+Entity::Entity(int x, bool gray){
     fenotype = x;
     while ( x > 0) {
         if (x % 2) {
@@ -16,6 +16,8 @@ Entity::Entity(int x){
             x /= 2;
         }
     }
+    if (gray)
+        convertToGray();
 }
 
 Entity::Entity(vector<bool> geno) {
@@ -72,12 +74,12 @@ pair<Entity, Entity> Entity::crossOverUniform(Entity e){
 }
 
 
-Population::Population(int mutate, int maxGen, int popSize) {
+Population::Population(int mutate, int maxGen, int popSize, bool gray) {
     mutateChance = mutate;
     maxGenerations = maxGen;
     currentGeneration = 0;
     for (int i = 0; i < popSize; i++) {
-        population.push_back(Entity {rand() % 100000 + 1});
+        population.push_back(Entity {rand() % 100000 + 1, gray});
     }
     int prob = population.size() * 5 + 1; //First place gets e.g. 101, second gets 86 and so on.
     int probSum = ((1 + prob) * population.size()) / 2;

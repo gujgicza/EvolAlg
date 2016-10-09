@@ -9,7 +9,7 @@ class Entity {
     int fenotype;           // value of x
     
 public:
-    Entity(int);
+    Entity(int, bool);
     Entity(vector<bool>);
     void convertToGray();
     int getFitness();
@@ -27,7 +27,7 @@ class Population {
     map<int, int> probabilities;
     
 public:
-    Population(int mutate, int maxGen, int popSize);
+    Population(int mutate, int maxGen, int popSize, bool gray);
     void evolve();
     void getPop();
     void popSort();
