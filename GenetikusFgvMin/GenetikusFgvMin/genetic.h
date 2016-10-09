@@ -10,19 +10,21 @@ class Entity {
     
 public:
     Entity(int);
+    Entity(vector<bool>);
     void convertToGray();
     int getFitness();
-    void mutate();
+    int getFenotype();
+    void mutate(int);
     pair<Entity, Entity> crossOverUniform(Entity);
     
 };
 
 class Population {
     vector<Entity> population; // the entities
-    int mutateChanche;
+    int mutateChance;
     int maxGenerations;
     int currentGeneration;
-    map<int, int> probabilties;
+    map<int, int> probabilities;
     
 public:
     Population(int mutate, int maxGen, int popSize);
