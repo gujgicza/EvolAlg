@@ -2,11 +2,12 @@
 #include "genetic.h"
 #include <math.h>
 #include <fstream>
+#include <algorithm>
 
 
 Entity::Entity(int x, bool gray){
     fenotype = x;
-    while ( x > 0) {
+    while ( genotype.size() < 17) {
         if (x % 2) {
             genotype.insert(genotype.begin(), true);
             x -= 1;
@@ -53,14 +54,14 @@ int Entity::getFenotype() {
 }
 
 void Entity::mutate(int chance) {
-    for (auto&& gene : genotype)
+    for (auto& gene : genotype)
         if ((rand() % 100 + 1) <= chance)
             gene = !gene;
 }
 
 pair<Entity, Entity> Entity::crossOverUniform(Entity e){
     vector<bool> childOneGenotype, childTwoGenotype;
-    for (int i = 0; i < genotype.size(); ++i){
+    for (int i = 0; i < genotype.size(); i++){
         if ((rand() % 2) == 0){
             childOneGenotype.push_back(genotype[i]);
             childTwoGenotype.push_back(e.genotype[i]);
@@ -95,7 +96,7 @@ Population::Population(int mutate, int maxGen, int popSize, bool gr) {
 
 
 void Population::evolve(){
-    ofstream&& os = ofstream();
+    ofstream os = ofstream();
     if (gray)
         os.open("averagesGray.txt");
     else
@@ -129,7 +130,7 @@ void Population::getPop(ostream& os){
 }
 
 void Population::popSort(){
-	sort(population.begin(), population.end(), [](Entity e1, Entity e2){return e1.getFitness() > e2.getFitness(); });
+	std::sort(population.begin(), population.end(), [](Entity e1, Entity e2){return e1.getFitness() > e2.getFitness(); });
 }
 
 vector<pair<Entity, Entity>> Population::chooseParents(){
