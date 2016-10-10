@@ -25,11 +25,12 @@ class Population {
     int maxGenerations;
     int currentGeneration;
     map<int, int> probabilities;
+    bool gray;
     
 public:
-    Population(int mutate, int maxGen, int popSize, bool gray);
+    Population(int mutate, int maxGen, int popSize, bool gr);
     void evolve();
-    void getPop();
+    void getPop(ostream&);
     void popSort();
     vector<pair<Entity, Entity>> chooseParents();
 };

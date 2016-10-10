@@ -20,6 +20,6 @@ int main(int argc, const char * argv[]) {
     Population pop{ mutateChance, maxGen, popSize, static_cast<bool>(gray)};
     pop.evolve(); //All the fun stuff happens here
     std::cout << std::endl;
-    pop.getPop();
+    //pop.getPop();
     
 }

@@ -12,12 +12,11 @@
 #include <stdio.h>
 
 // Needed headers:
-// TODO: add boost
-//#include <boost/math/distributions/students_t.hpp>
+#include <boost/math/distributions/students_t.hpp>
 #include <iostream>
 #include <iomanip>
 // Simplify usage:
-// using namespace boost::math;
+using namespace boost::math;
 using namespace std;
 
 void two_samples_t_test_equal_sd(

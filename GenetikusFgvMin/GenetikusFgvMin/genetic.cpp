@@ -1,6 +1,7 @@
 #include <iostream>
 #include "genetic.h"
 #include <math.h>
+#include <fstream>
 
 
 Entity::Entity(int x, bool gray){
@@ -74,10 +75,11 @@ pair<Entity, Entity> Entity::crossOverUniform(Entity e){
 }
 
 
-Population::Population(int mutate, int maxGen, int popSize, bool gray) {
+Population::Population(int mutate, int maxGen, int popSize, bool gr) {
     mutateChance = mutate;
     maxGenerations = maxGen;
     currentGeneration = 0;
+    gray = gr;
     for (int i = 0; i < popSize; i++) {
         population.push_back(Entity {rand() % 100000 + 1, gray});
     }
@@ -93,8 +95,15 @@ Population::Population(int mutate, int maxGen, int popSize, bool gray) {
 
 
 void Population::evolve(){
+    ofstream&& os = ofstream();
+    if (gray)
+        os.open("averagesGray.txt");
+    else
+        os.open("averages.txt");
+    
 	for (; currentGeneration < maxGenerations; ++currentGeneration){
 		popSort();
+        getPop(os);
 		auto parents = chooseParents();
 		population.clear();
 		for (auto& parent : parents){
@@ -106,15 +115,17 @@ void Population::evolve(){
 			entity.mutate(mutateChance);
 
 	}
+    os.close();
 	popSort();
 }
 
-void Population::getPop(){
-	int average = 0;
+void Population::getPop(ostream& os){
+	signed long long average = 0;
 	for (auto e : population)
 		average += e.getFitness();
-    cout << "Best entity's value is:" << population[0].getFenotype() << endl;
-	cout << "Best entity's fitness is: " << population[0].getFitness() << endl << "Average fitness is: " << average / population.size() << endl;
+    os << population[0].getFenotype()<< "\t" << population[0].getFitness() << endl;
+    //os << (double)average / population.size() << endl;
+    cout << "Average fitness is: " << (double)average / population.size() << endl;
 }
 
 void Population::popSort(){
