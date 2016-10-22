@@ -18,6 +18,7 @@ Entity::Entity(int n){
 		auto it = std::find(permutations.begin(), permutations.end(), permHelper[i]);
 		*it = i;
 	}
+	genotype = permutations;
 	fitness = GetValue();
 }
 
@@ -28,19 +29,56 @@ Entity::Entity(std::vector<int> gen){
 
 Entity Entity::CrossOverOX(Entity e){
 	int pos1 = rand() % genotype.size(), pos2 = rand() % genotype.size();
+	while (pos1 >= pos2){
+		pos1 = rand() % genotype.size();
+		pos2 = rand() % genotype.size();
+	}
 	std::cout << pos1 << " " << pos2;
 	std::vector<int> childGenotype;
 	for (auto i : genotype)
 		childGenotype.push_back(-1);
 
-	for (int i = pos1; i <= pos2; ++i)
+	for (int i = pos1; i < pos2; ++i)
 		childGenotype[i] = genotype[i];
 
 	int lastUsedChildPos = pos2;
 	int lastUsedParent2Pos = pos2;
+	int lastFromParent2Beginning = 0;
+	int lastFromChildBeginning = 0;
 	while (lastUsedChildPos < genotype.size()){
-
+		while (lastUsedParent2Pos < genotype.size()){
+			if (std::find(childGenotype.begin(), childGenotype.end(), e.genotype[lastUsedParent2Pos]) == childGenotype.end()){
+				childGenotype[lastUsedChildPos] = e.genotype[lastUsedParent2Pos];
+				lastUsedChildPos++;
+				lastUsedParent2Pos++;
+			}
+			else{
+				lastUsedParent2Pos++;
+			}
+		}
+		if (lastUsedChildPos == genotype.size())
+			break;
+		if (std::find(childGenotype.begin(), childGenotype.end(), e.genotype[lastFromParent2Beginning]) == childGenotype.end()){
+			childGenotype[lastUsedChildPos] = e.genotype[lastFromParent2Beginning];
+			lastUsedChildPos++;
+			lastFromParent2Beginning++;
+		}
+		else{
+			lastFromParent2Beginning++;
+		}
 	}
+	while (lastFromChildBeginning < pos1){
+		if (std::find(childGenotype.begin(), childGenotype.end(), e.genotype[lastFromParent2Beginning]) == childGenotype.end()){
+			childGenotype[lastFromChildBeginning] = e.genotype[lastFromParent2Beginning];
+			lastFromChildBeginning++;
+			lastFromParent2Beginning++;
+		}
+		else{
+			lastFromParent2Beginning++;
+		}
+	}
+
+	return{ childGenotype };
 }
 
 int Entity::GetValue(){
