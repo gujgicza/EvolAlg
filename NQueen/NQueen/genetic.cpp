@@ -33,7 +33,6 @@ Entity Entity::CrossOverOX(Entity e){
 		pos1 = rand() % genotype.size();
 		pos2 = rand() % genotype.size();
 	}
-	std::cout << pos1 << " " << pos2;
 	std::vector<int> childGenotype;
 	for (auto i : genotype)
 		childGenotype.push_back(-1);
