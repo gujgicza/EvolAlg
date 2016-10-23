@@ -40,8 +40,7 @@ int numberOfCycles(std::vector<int> firstParent, std::vector<int> secondParent){
 			numOfCycles++;
 		}
 	}
-/*	for (auto i : cycles)
-		std::cout << i << " ";*/
+
 	int max = 0;
 	for (auto i : cycles)
 		if (i > max)
@@ -51,16 +50,6 @@ int numberOfCycles(std::vector<int> firstParent, std::vector<int> secondParent){
 
 int main(){
 	srand(time(NULL));
-/*	std::vector<int> p1 = randomPermutation(9), p2 = randomPermutation(9);
-	for (auto i : p1)
-		std::cout << i << " ";
-	std::cout << std::endl;
-	for (auto i : p2)
-		std::cout << i << " ";
-	std::cout << std::endl;
-	numberOfCycles(p1, p2);
-	getchar();*/
-
 	std::vector<int> results;
 	for (int i = 0; i < 9; ++i)
 		results.push_back(0);
