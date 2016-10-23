@@ -65,15 +65,11 @@ int main(){
 	for (int i = 0; i < 9; ++i)
 		results.push_back(0);
 	std::vector<std::pair<std::vector<int>, std::vector<int>>> parents;
-	for (int i = 0; i < 100000; ++i){
+	for (int i = 0; i < 100000; ++i)
 		parents.push_back({ randomPermutation(9), randomPermutation(9) });
-		if (i % 5000 == 0)
-			std::cout << i << " ";
-	}
-	std::cout << std::endl;
-	int progress = 0;
+
 	for (auto& i : parents)
-		results[numberOfCycles(i.first, i.second)]++, std::cout << progress << " ";
+		results[numberOfCycles(i.first, i.second)]++;
 	for (int i : results)
 		std::cout << i << " ";
 	getchar();
