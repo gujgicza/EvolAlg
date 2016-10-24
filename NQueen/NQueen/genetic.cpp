@@ -85,7 +85,7 @@ int Entity::GetValue(){
 	int sizeOfBoard = genotype.size();
 	for (int i = 0; i < sizeOfBoard - 1; ++i){
 		for (int j = i + 1; j < sizeOfBoard; ++j){
-			if ((abs(j - i) - abs(genotype[i] - genotype[j])) < 0.2) // double == is iffy
+			if (abs((abs(j - i) - abs(genotype[i] - genotype[j]))) < 0.2) // double == is iffy
 				numberOfConflicts++;
 		}
 	}
