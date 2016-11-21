@@ -8,12 +8,14 @@ import org.apache.commons.math3.linear.LUDecomposition;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 
-public class Entity {
+public class Entity implements Comparable<Entity> {
 	private double x, y;
 	private double sigma1, sigma2;
 	private double alfa;
+	AlmostLambda function;
 	
-	public Entity(){
+	public Entity(AlmostLambda func){
+		function = func;
 		BlockRealMatrix rndHelp = new BlockRealMatrix(1,1);
 		rndHelp.setEntry(0, 0, 20);
 		double[] mean = new double[1];
@@ -30,24 +32,25 @@ public class Entity {
 		alfa = rnd.sample()[0];
 	}
 	
-	public Entity(double value1, double value2, double deviation1, double deviation2, double rad){
+	public Entity(double value1, double value2, double deviation1, double deviation2, double rad, AlmostLambda func){
 		x = value1;
 		y = value2;
 		sigma1 = deviation1;
 		sigma2 = deviation2;
 		y = rad;
+		function = func;
 	}
 	
-	public double getValue(AlmostLambda function){
+	public double getValue(){
 		return function.evaluate(x,y);
 	}
 	
 	public ArrayList<Entity> crossOver(Entity e){
 		double randAlfa = 2 * Math.random() - 0.5;
 		Entity e1 = new Entity(x, y, randAlfa * sigma1 + (1 - randAlfa) * e.sigma1,
-				randAlfa * sigma2 + (1 - randAlfa) * e.sigma2, randAlfa * alfa + (1 - randAlfa) * e.alfa);
+				randAlfa * sigma2 + (1 - randAlfa) * e.sigma2, randAlfa * alfa + (1 - randAlfa) * e.alfa, function);
 		Entity e2 = new Entity(e.x, e.y, randAlfa * e.sigma1 + (1 - randAlfa) * sigma1,
-				randAlfa * e.sigma2 + (1 - randAlfa) * sigma2, randAlfa * e.alfa + (1-randAlfa) * alfa);
+				randAlfa * e.sigma2 + (1 - randAlfa) * sigma2, randAlfa * e.alfa + (1-randAlfa) * alfa, function);
 		ArrayList<Entity> retVal = new ArrayList<Entity>();
 		retVal.add(e1);
 		retVal.add(e2);
@@ -84,5 +87,14 @@ public class Entity {
 		RealVector newX = cholesky.getL().operate(vector);
 		x = newX.getEntry(0);
 		y = newX.getEntry(1);
+	}
+
+	@Override
+	public int compareTo(Entity arg0) {
+		if(getValue() < arg0.getValue())
+			return -1;
+		if(getValue() > arg0.getValue())
+			return 1;
+		return 0;
 	}
 }
