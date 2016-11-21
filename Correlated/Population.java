@@ -15,6 +15,9 @@ public class Population {
 		maxGen = 1500;
 		currentGen = 0;
 		popSize = 50;
+		population = new ArrayList<Entity>();
+		for(int i = 0; i < popSize; i++)
+			population.add(new Entity(function));
 		probabilities = new TreeMap<Integer, Integer>();
 		int prob = popSize * 5 + 1; //First place gets e.g. 101, second gets 86 and so on.
 		probSum = ((1 + prob) * popSize) / 2;
@@ -43,6 +46,7 @@ public class Population {
 	}
 	
 	public void evolve(){
+		ArrayList<Entity> tempPopulation = new ArrayList<Entity>();
 		for (; currentGen < maxGen; ++currentGen){
 			popSort();
 			ArrayList<ArrayList<Entity>> parents = chooseParents();
@@ -53,12 +57,14 @@ public class Population {
 				ArrayList<Entity> children = parent.get(0).crossOver(parent.get(1));
 				children.get(0).mutate();
 				children.get(1).mutate();
-				population.add(children.get(0));
-				population.add(children.get(1));
+				tempPopulation.add(children.get(0));
+				tempPopulation.add(children.get(1));
 			}
 		}
+		tempPopulation.sort(null);
+		for(int i = 0; i < popSize; i++)
+			population.add(tempPopulation.get(i));
 		popSort();
-		for(int i = popSize; i < population.size(); i++)
-			population.remove(i);
 	}
+
 }
