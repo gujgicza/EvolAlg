@@ -37,8 +37,8 @@ public class Population {
 		ArrayList<ArrayList<Entity>> retVal = new ArrayList<ArrayList<Entity>>();
 		for (int i = 0; i < population.size() * 5; ++i){
 			ArrayList<Entity> onePair = new ArrayList<Entity>();
-			onePair.add(population.get((int) (Math.rint(Math.random() * 500) % probSum)));
-			onePair.add(population.get((int) (Math.rint(Math.random() * 500) % probSum)));
+			onePair.add(population.get(probabilities.get((int)(Math.rint(Math.random() * 500) % probSum))));
+			onePair.add(population.get(probabilities.get((int)(Math.rint(Math.random() * 500) % probSum))));
 			retVal.add(onePair);
 		}
 			//retVal.push_back({ population[probabilities.at(rand() % probSum)], population[probabilities.at(rand() % probSum)] }); //Relatively even distribution with %
@@ -49,6 +49,8 @@ public class Population {
 		ArrayList<Entity> tempPopulation = new ArrayList<Entity>();
 		for (; currentGen < maxGen; ++currentGen){
 			popSort();
+			if(population.get(0).getDeviation() < 2 * Math.pow(10, -10))
+				break;
 			ArrayList<ArrayList<Entity>> parents = chooseParents();
 			population.clear();
 			ArrayList<Entity> parent;
@@ -60,11 +62,16 @@ public class Population {
 				tempPopulation.add(children.get(0));
 				tempPopulation.add(children.get(1));
 			}
+			tempPopulation.sort(null);
+			for(int i = 0; i < popSize; i++)
+				population.add(tempPopulation.get(i));
 		}
-		tempPopulation.sort(null);
-		for(int i = 0; i < popSize; i++)
-			population.add(tempPopulation.get(i));
+
 		popSort();
+	}
+	
+	public void getPop(){
+		population.get(0).getEntity();
 	}
 
 }

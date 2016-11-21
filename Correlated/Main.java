@@ -7,5 +7,8 @@ import org.apache.commons.math3.linear.RealMatrix;
 public class Main {
 	
 	public static void main(String[] args){
+		Population pop = new Population(new SimpleTester());
+		pop.evolve();
+		pop.getPop();
 	}
 }

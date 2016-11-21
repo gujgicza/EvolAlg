@@ -14,6 +14,14 @@ public class Entity implements Comparable<Entity> {
 	private double alfa;
 	AlmostLambda function;
 	
+	public double getDeviation(){
+		return Math.min(Math.min(Math.sqrt(sigma1 * sigma1 + sigma2 * sigma2), Math.abs(sigma1)), Math.abs(sigma2));
+	}
+	
+	public void getEntity(){
+		System.out.println("x: " + x + " y: " + y + " evaluates to: " + function.evaluate(x, y) + " sigma1 and 2: " + sigma1 + " " + sigma2);
+	}
+	
 	public Entity(AlmostLambda func){
 		function = func;
 		BlockRealMatrix rndHelp = new BlockRealMatrix(1,1);
